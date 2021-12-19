@@ -1,5 +1,4 @@
 #include "ProtectedDirectory.h"
-#include "PrivilegeManager.h"
 
 #include <iostream>
 #include <Sddl.h>
@@ -28,30 +27,6 @@ ProtectedDirectory::~ProtectedDirectory()
 	{
 		CloseHandle(m_handle);
 	}
-}
-
-bool ProtectedDirectory::ChangeDirectoryOwnerDeprecated(const SidWrapper& sid) const
-{
-	if (!PrivilegeManager::EnableSinglePrivilege(SE_TAKE_OWNERSHIP_NAME))
-	{
-		return false;
-	}
-
-	const auto retVal = SetSecurityInfo(m_handle,
-	                                    SE_FILE_OBJECT,
-	                                    OWNER_SECURITY_INFORMATION,
-	                                    sid.GetSid(),
-	                                    nullptr,
-	                                    nullptr,
-	                                    nullptr);
-
-	if (retVal != ERROR_SUCCESS)
-	{
-		std::cout << "SetSecurityInfo error: " << std::system_category().message(GetLastError()) << std::endl;
-		return false;
-	}
-
-	return true;
 }
 
 bool ProtectedDirectory::ChangeDirectoryDacl(const Dacl& dacl) const

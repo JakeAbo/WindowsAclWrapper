@@ -142,23 +142,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AceEntry.cpp" />
+    <ClCompile Include="Owner.cpp" />
     <ClCompile Include="SddlBuilder.cpp" />
     <ClCompile Include="AceTranslator.cpp" />
     <ClCompile Include="Dacl.cpp" />
-    <ClCompile Include="PrivilegeManager.cpp" />
     <ClCompile Include="ProtectedDirectory.cpp" />
-    <ClCompile Include="SidWrapper.cpp" />
+    <ClCompile Include="SddlItem.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AceEntry.h" />
+    <ClInclude Include="Owner.h" />
     <ClInclude Include="SddlBuilder.h" />
     <ClInclude Include="AceTranslator.h" />
     <ClInclude Include="BasicTypes.h" />
     <ClInclude Include="Dacl.h" />
-    <ClInclude Include="PrivilegeManager.h" />
     <ClInclude Include="ProtectedDirectory.h" />
-    <ClInclude Include="SidWrapper.h" />
+    <ClInclude Include="SddlItem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

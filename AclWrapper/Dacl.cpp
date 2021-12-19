@@ -12,19 +12,8 @@ std::wstring Dacl::GenerateStringValue() const
 
 	for(const auto& entry : m_aceEntries)
 	{
-		result += entry.GenerateEntryString();
+		result += entry.GenerateStringValue();
 	}
 
 	return result;
-}
-
-Owner::Owner(Trustee trustee)
-	: m_trustee(trustee)
-{
-
-}
-
-std::wstring Owner::GenerateStringValue() const
-{
-	return SddlBuilder().SddlObject(SddlObject::Owner).Colon().Trustee(m_trustee).GetStringValue();
 }

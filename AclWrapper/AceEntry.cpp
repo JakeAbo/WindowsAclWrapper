@@ -1,12 +1,12 @@
 #include "AceEntry.h"
 
 AceEntry::AceEntry(AceType type, AceFlag flag, Permissions perm, Trustee trustee)
-	: m_type(type), m_aceFlag(flag), m_permissions(perm), m_trustee(trustee)
+	: SddlItem(), m_type(type), m_aceFlag(flag), m_permissions(perm), m_trustee(trustee)
 {
 		
 }
 
-std::wstring AceEntry::GenerateEntryString() const
+std::wstring AceEntry::GenerateStringValue() const
 {
 	return SddlBuilder().
 	       LeftBracket().

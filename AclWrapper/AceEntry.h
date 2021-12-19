@@ -1,8 +1,9 @@
 #pragma once
 
+#include "SddlItem.h"
 #include "SddlBuilder.h"
 
-class AceEntry
+class AceEntry : public SddlItem
 {
 public:
 	AceEntry(AceType type = AceType::None, 
@@ -10,7 +11,7 @@ public:
 		Permissions perm = Permissions::None,
 		Trustee trustee = Trustee::None);
 
-	std::wstring GenerateEntryString() const;
+	std::wstring GenerateStringValue() const override;
 
 private:
 	AceType m_type{ AceType::None };
@@ -18,4 +19,3 @@ private:
 	Permissions m_permissions{ Permissions::None };
 	Trustee m_trustee{ Trustee::None };
 };
-
