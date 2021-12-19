@@ -59,3 +59,8 @@ Now you may modifiy your dacl/owner:
 		std::cout << "success to change dacl" << std::endl;
 	}
 ```
+
+For more information:
+https://docs.microsoft.com/en-us/windows/win32/secauthz/security-descriptor-string-format
+https://docs.microsoft.com/en-us/windows/win32/api/aclapi/nf-aclapi-setsecurityinfo
+
