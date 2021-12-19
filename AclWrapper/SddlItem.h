@@ -5,7 +5,7 @@ class SddlItem
 {
 public:
 	SddlItem() = default;
-	virtual ~SddlItem();
+	virtual ~SddlItem() = default;
 
 	virtual std::wstring GenerateStringValue() const = 0;
 };

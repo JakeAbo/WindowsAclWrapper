@@ -13,7 +13,7 @@
 
 int main()
 {
-	ProtectedDirectory myDir{ L"C:\\ProgramData\\0002" };
+	ProtectedDirectory myDir{ L"C:\\ProgramData\\0003" };
 	if (myDir.ChangeDirectoryOwner(Owner(Trustee::BuiltinAdministrators)/*WinBuiltinAdministratorsSid*//*WinLocalSystemSid*/))
 	{
 		std::cout << "success to change to system owner" << std::endl;
