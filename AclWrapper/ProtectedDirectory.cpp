@@ -3,6 +3,8 @@
 #include <iostream>
 #include <Sddl.h>
 
+#include "SecurityDescriptor.h"
+
 ProtectedDirectory::ProtectedDirectory(std::wstring path): m_path(std::move(path))
 {
 	m_handle = CreateFileW(
@@ -31,36 +33,12 @@ ProtectedDirectory::~ProtectedDirectory()
 
 bool ProtectedDirectory::ChangeDirectoryDacl(const Dacl& dacl) const
 {
-	PACL acl = nullptr;
-	SECURITY_ATTRIBUTES sa;
+	SecurityDescriptor sa;
+	sa.InitWithSddlString(dacl.GenerateStringValue());
 
-	sa.nLength = sizeof(SECURITY_ATTRIBUTES);
-	sa.bInheritHandle = FALSE;
-
-	auto success = ConvertStringSecurityDescriptorToSecurityDescriptor(
-		dacl.GenerateStringValue().c_str(),
-		SDDL_REVISION_1,
-		&sa.lpSecurityDescriptor,
-		nullptr);
-
-	if (!success)
+	const PACL acl = sa.GetDacl();
+	if (!acl)
 	{
-		std::cout << "ConvertStringSecurityDescriptorToSecurityDescriptor error: " << std::system_category().message(GetLastError()) << std::endl;
-		return false;
-	}
-
-	BOOL IsDaclExists;
-	BOOL IsDaclDefaultedMechanism;
-
-	success = GetSecurityDescriptorDacl(
-		sa.lpSecurityDescriptor,
-		&IsDaclExists,
-		&acl,
-		&IsDaclDefaultedMechanism);
-
-	if (!success)
-	{
-		std::cout << "GetSecurityDescriptorDacl error: " << std::system_category().message(GetLastError()) << std::endl;
 		return false;
 	}
 
@@ -78,49 +56,24 @@ bool ProtectedDirectory::ChangeDirectoryDacl(const Dacl& dacl) const
 		std::cout << "SetSecurityInfo error: " << std::system_category().message(GetLastError()) << std::endl;
 		return false;
 	}
-
-	// Free the memory allocated for the SECURITY_DESCRIPTOR.
-	if (LocalFree(sa.lpSecurityDescriptor) != NULL)
-	{
-		std::cout << "LocalFree error: " << std::system_category().message(GetLastError()) << std::endl;
-	}
-
+	
 	return true;
 }
 
 bool ProtectedDirectory::ChangeDirectoryOwner(const Owner& owner) const
-{
-	SECURITY_ATTRIBUTES sa;
-
-	sa.nLength = sizeof(SECURITY_ATTRIBUTES);
-	sa.bInheritHandle = FALSE;
-
-	auto success = ConvertStringSecurityDescriptorToSecurityDescriptor(
-		owner.GenerateStringValue().c_str(),
-		SDDL_REVISION_1,
-		&sa.lpSecurityDescriptor,
-		nullptr);
-
-	if (!success)
+{	
+	SecurityDescriptor sa;
+	if (sa.InitWithSddlString(owner.GenerateStringValue()))
 	{
-		std::cout << "ConvertStringSecurityDescriptorToSecurityDescriptor error: " << std::system_category().message(GetLastError()) << std::endl;
 		return false;
 	}
 
-	PSID pOwner = nullptr;
-	BOOL IsOwnerDefaultedMechanism;
-
-	success = GetSecurityDescriptorOwner(
-		sa.lpSecurityDescriptor,
-		&pOwner,
-		&IsOwnerDefaultedMechanism);
-
-	if (!success)
+	const PSID pOwner = sa.GetOwner();
+	if (!pOwner)
 	{
-		std::cout << "GetSecurityDescriptorOwner error: " << std::system_category().message(GetLastError()) << std::endl;
 		return false;
 	}
-
+	
 	const auto retCode = SetSecurityInfo(
 		m_handle,
 		SE_FILE_OBJECT,
@@ -135,12 +88,6 @@ bool ProtectedDirectory::ChangeDirectoryOwner(const Owner& owner) const
 		std::cout << "SetSecurityInfo error: " << std::system_category().message(GetLastError()) << std::endl;
 		return false;
 	}
-
-	// Free the memory allocated for the SECURITY_DESCRIPTOR.
-	if (LocalFree(sa.lpSecurityDescriptor) != NULL)
-	{
-		std::cout << "LocalFree error: " << std::system_category().message(GetLastError()) << std::endl;
-	}
-
+	
 	return true;
 }

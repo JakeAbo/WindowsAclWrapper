@@ -148,6 +148,7 @@
     <ClCompile Include="Dacl.cpp" />
     <ClCompile Include="ProtectedDirectory.cpp" />
     <ClCompile Include="SddlItem.cpp" />
+    <ClCompile Include="SecurityDescriptor.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="Dacl.h" />
     <ClInclude Include="ProtectedDirectory.h" />
     <ClInclude Include="SddlItem.h" />
+    <ClInclude Include="SecurityDescriptor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -45,6 +45,9 @@
     <ClCompile Include="SddlItem.cpp">
       <Filter>Source Files\SddlItems</Filter>
     </ClCompile>
+    <ClCompile Include="SecurityDescriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ProtectedDirectory.h">
@@ -70,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="SddlItem.h">
       <Filter>Header Files\SddlItems</Filter>
+    </ClInclude>
+    <ClInclude Include="SecurityDescriptor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
