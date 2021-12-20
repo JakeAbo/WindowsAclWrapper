@@ -10,10 +10,11 @@
 #include <unordered_map>
 #include "SddlBuilder.h"
 #include "Dacl.h"
+#include "Owner.h"
 
 int main()
 {
-	ProtectedDirectory myDir{ L"C:\\ProgramData\\0005" };
+	ProtectedDirectory myDir{ L"C:\\ProgramData\\0006" };
 	if (myDir.ChangeDirectoryOwner(Owner(Trustee::BuiltinAdministrators)/*WinBuiltinAdministratorsSid*//*WinLocalSystemSid*/))
 	{
 		std::cout << "success to change to system owner" << std::endl;

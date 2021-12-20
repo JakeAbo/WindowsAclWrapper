@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Dacl.h"
+#include "Owner.h"
 
 class ProtectedDirectory final
 {
